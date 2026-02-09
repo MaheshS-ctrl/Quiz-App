@@ -36,11 +36,42 @@ function loadQuestion() {
   questionE1.textContent = currentQuestion.question;
   optionsE1.innerHTML = "";
 
-  currentQuestion.options.forEach((option) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    optionsE1.appendChild(button);
+  currentQuestion.options.forEach((option, index) => {
+  const button = document.createElement("button");
+  button.textContent = option;
+
+  button.addEventListener("click", function () {
+    checkAnswer(index);
   });
+
+  optionsE1.appendChild(button);
+});
+
 }
 
 loadQuestion();
+
+//Checking answer 
+function checkAnswer(selectedIndex) {
+  const correctIndex = questions[0].correctAnswer;
+
+  if (selectedIndex === correctIndex) {
+    score++;
+    alert("Correct Answer!");
+  } else {
+    alert("Wrong Answer!");
+  }
+
+  console.log("Current Score:", score);
+
+  // Disable all buttons after one click
+  const buttons = optionsE1.querySelectorAll("button");
+  buttons.forEach((btn) => (btn.disabled = true));
+}
+
+
+//stores user score
+let score = 0;
+
+
+
