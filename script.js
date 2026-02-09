@@ -1,3 +1,7 @@
+//stores user score
+let score = 0;
+let currentQuestionIndex = 0;
+
 // Quiz questions data
 const questions = [
   {
@@ -28,10 +32,12 @@ const questions = [
 //Dom Elements
 const questionE1 = document.getElementById('question');
 const optionsE1 = document.getElementById('options');
+const nextBtn = document.getElementById("next-btn");
+
 
 //Fn to Load Q&A
 function loadQuestion() {
-  const currentQuestion = questions[0]; // first question
+  const currentQuestion = questions[currentQuestionIndex];
 
   questionE1.textContent = currentQuestion.question;
   optionsE1.innerHTML = "";
@@ -53,7 +59,7 @@ loadQuestion();
 
 //Checking answer 
 function checkAnswer(selectedIndex) {
-  const correctIndex = questions[0].correctAnswer;
+  const correctIndex = questions[currentQuestionIndex].correctAnswer;
 
   if (selectedIndex === correctIndex) {
     score++;
@@ -69,9 +75,24 @@ function checkAnswer(selectedIndex) {
   buttons.forEach((btn) => (btn.disabled = true));
 }
 
+//next question fn
+function nextQuestion() {
+  currentQuestionIndex++;
 
-//stores user score
-let score = 0;
+  if (currentQuestionIndex < questions.length) {
+    loadQuestion();
+  } else {
+    alert("Quiz Completed!");
+    console.log("Final Score:", score);
+  }
+}
+
+nextBtn.addEventListener("click", nextQuestion);
+
+
+
+
+
 
 
 
