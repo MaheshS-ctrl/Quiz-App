@@ -1,0 +1,76 @@
+/* Reset default browser spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* By Default hidden behavvior of elemets for start page */
+.hidden{
+    display: none;
+}
+
+/* Page background */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+}
+
+/* Quiz container */
+#quiz-container {
+  width: 400px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Question */
+#question {
+  margin-bottom: 15px;
+}
+
+/* Options buttons */
+#options button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e3e7ed;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#options button:hover {
+  background-color: #cfd6df;
+}
+
+/* Timer and score */
+#timer,
+#score {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Next button */
+#next-btn,#start-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#next-btn:hover {
+  background-color: #43a047;
+}
+
+#start-btn:hover{
+    background-color: #43a047;
+}

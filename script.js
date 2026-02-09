@@ -32,16 +32,39 @@ const questions = [
 ];
 
 //Dom Elements
+const start1 = document.getElementById('start-btn');
 const questionE1 = document.getElementById('question');
 const optionsE1 = document.getElementById('options');
 const nextBtn = document.getElementById("next-btn");
 const timerEl = document.getElementById("timer");
 const scoreEl = document.getElementById("score");
 
+//start Quiz fn
+function startQuiz(){
+    clearInterval(timerId)
 
+     score = 0;
+     currentQuestionIndex = 0;
+    
+    questionE1.classList.remove("hidden");
+    optionsE1.classList.remove("hidden");
+    nextBtn.classList.remove("hidden");
+    timerEl.classList.remove("hidden");
+    scoreEl.classList.remove("hidden");
+
+    start1.classList.add("hidden");
+
+    scoreEl.textContent = "Score: 0";
+    
+    loadQuestion();
+}
+
+start1.addEventListener('click',startQuiz)
 
 //Fn to Load Q&A
 function loadQuestion() {
+    nextBtn.disabled = true;
+
   const currentQuestion = questions[currentQuestionIndex];
 
   questionE1.textContent = currentQuestion.question;
@@ -61,8 +84,6 @@ function loadQuestion() {
 startTimer();
 
 }
-
-loadQuestion();
 
 
 //tiner fn
@@ -85,6 +106,7 @@ function startTimer() {
 
 //Checking answer 
 function checkAnswer(selectedIndex) {
+     nextBtn.disabled = false;
     clearInterval(timerId);
   const correctIndex = questions[currentQuestionIndex].correctAnswer;
 
@@ -99,6 +121,7 @@ function checkAnswer(selectedIndex) {
   const buttons = optionsE1.querySelectorAll("button");
   buttons.forEach((btn) => (btn.disabled = true));
 }
+
 
 //next question fn
 function nextQuestion() {
