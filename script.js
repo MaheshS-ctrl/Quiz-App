@@ -1,160 +1,116 @@
-//stores user score
+// ================= IMPORTS =================
+import { questions } from "./src/data/questions.js";
+import { createTimer } from "./src/utils/timer.js";
+import { calculateScore } from "./src/utils/score.js";
+
+// ================= STATE =================
 let score = 0;
 let currentQuestionIndex = 0;
-let timeLeft = 10;
-let timerId = null;
+let timer = null;
 
-// Quiz questions data
-const questions = [
-  {
-    id: 1,
-    question: "What does HTML stand for?",
-    options: [
-      "Hyper Text Markup Language",
-      "High Text Machine Language",
-      "Hyperlinks and Text Markup Language",
-      "Home Tool Markup Language"
-    ],
-    correctAnswer: 0
-  },
-  {
-    id: 2,
-    question: "Which keyword is used to declare a variable in JavaScript?",
-    options: ["var", "define", "int", "string"],
-    correctAnswer: 0
-  },
-  {
-    id: 3,
-    question: "Which data type is NOT in JavaScript?",
-    options: ["Number", "Boolean", "Float", "Undefined"],
-    correctAnswer: 2
-  }
-];
-
-//Dom Elements
-const start1 = document.getElementById('start-btn');
-const questionE1 = document.getElementById('question');
-const optionsE1 = document.getElementById('options');
+// ================= DOM ELEMENTS =================
+const startBtn = document.getElementById("start-btn");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
 const nextBtn = document.getElementById("next-btn");
 const timerEl = document.getElementById("timer");
 const scoreEl = document.getElementById("score");
 
-//start Quiz fn
-function startQuiz(){
-    clearInterval(timerId)
+// ================= START QUIZ =================
+function startQuiz() {
+  score = 0;
+  currentQuestionIndex = 0;
 
-     score = 0;
-     currentQuestionIndex = 0;
-    
-    questionE1.classList.remove("hidden");
-    optionsE1.classList.remove("hidden");
-    nextBtn.classList.remove("hidden");
-    timerEl.classList.remove("hidden");
-    scoreEl.classList.remove("hidden");
+  startBtn.classList.add("hidden");
+  optionsEl.classList.remove("hidden");
+  nextBtn.classList.remove("hidden");
+  timerEl.classList.remove("hidden");
+  scoreEl.classList.remove("hidden");
 
-    start1.classList.add("hidden");
+  scoreEl.textContent = "Score: 0";
 
-    scoreEl.textContent = "Score: 0";
-    
-    loadQuestion();
+  loadQuestion();
 }
 
-start1.addEventListener('click',startQuiz)
+startBtn.addEventListener("click", startQuiz);
 
-//Fn to Load Q&A
+// ================= LOAD QUESTION =================
 function loadQuestion() {
-    nextBtn.disabled = true;
+  nextBtn.disabled = true;
 
   const currentQuestion = questions[currentQuestionIndex];
-
-  questionE1.textContent = currentQuestion.question;
-  optionsE1.innerHTML = "";
+  questionEl.textContent = currentQuestion.question;
+  optionsEl.innerHTML = "";
 
   currentQuestion.options.forEach((option, index) => {
-  const button = document.createElement("button");
-  button.textContent = option;
+    const button = document.createElement("button");
+    button.textContent = option;
 
-  button.addEventListener("click", function () {
-    checkAnswer(index);
+    button.addEventListener("click", () => checkAnswer(index));
+    optionsEl.appendChild(button);
   });
 
-  optionsE1.appendChild(button);
-});
-   
-startTimer();
+  // Stop old timer
+  if (timer) {
+    timer.stop();
+  }
 
-}
-
-
-//tiner fn
-function startTimer() {
-  clearInterval(timerId); // clear old timer
-  timeLeft = 10;
-  timerEl.textContent = `Time left: ${timeLeft}s`;
-
-  timerId = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = `Time left: ${timeLeft}s`;
-
-    if (timeLeft === 0) {
-      clearInterval(timerId);
-      nextQuestion(); // auto move to next question
+  // Create new timer using utility
+  timer = createTimer(
+    10,
+    (time) => {
+      timerEl.textContent = `Time left: ${time}s`;
+    },
+    () => {
+      nextBtn.disabled = false;
+      nextQuestion();
     }
-  }, 1000);
+  );
+
+  timer.start();
 }
 
-
-//Checking answer 
+// ================= CHECK ANSWER =================
 function checkAnswer(selectedIndex) {
-     nextBtn.disabled = false;
-    clearInterval(timerId);
+  timer.stop();
+
   const correctIndex = questions[currentQuestionIndex].correctAnswer;
+  const isCorrect = selectedIndex === correctIndex;
 
-  if (selectedIndex === correctIndex) {
-    score++;
-    scoreEl.textContent = `Score: ${score}`;
-  } 
+  score = calculateScore(score, isCorrect);
+  scoreEl.textContent = `Score: ${score}`;
 
-  console.log("Current Score:", score);
-
-  // Disable all buttons after one click
-  const buttons = optionsE1.querySelectorAll("button");
+  const buttons = optionsEl.querySelectorAll("button");
   buttons.forEach((btn) => (btn.disabled = true));
+
+  nextBtn.disabled = false;
 }
 
-
-//next question fn
+// ================= NEXT QUESTION =================
 function nextQuestion() {
   currentQuestionIndex++;
 
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
-  } 
-  else {
+  } else {
     endQuiz();
   }
 }
 
-
 nextBtn.addEventListener("click", nextQuestion);
 
-//endQuiz fn
+// ================= END QUIZ =================
 function endQuiz() {
-  clearInterval(timerId);
+  if (timer) {
+    timer.stop();
+  }
 
-  questionE1.textContent = "Quiz Completed";
-  optionsE1.innerHTML = "";
-  timerEl.textContent = "";
-  nextBtn.style.display = "none";
+  questionEl.textContent = "Quiz Completed 🎉";
+  optionsEl.innerHTML = "";
+
+  optionsEl.classList.add("hidden");
+  timerEl.classList.add("hidden");
+  nextBtn.classList.add("hidden");
 
   scoreEl.textContent = `Final Score: ${score} / ${questions.length}`;
 }
-
-
-
-
-
-
-
-
-
