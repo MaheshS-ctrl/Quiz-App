@@ -1,6 +1,8 @@
 //stores user score
 let score = 0;
 let currentQuestionIndex = 0;
+let timeLeft = 10;
+let timerId = null;
 
 // Quiz questions data
 const questions = [
@@ -33,6 +35,8 @@ const questions = [
 const questionE1 = document.getElementById('question');
 const optionsE1 = document.getElementById('options');
 const nextBtn = document.getElementById("next-btn");
+const timerEl = document.getElementById("timer");
+
 
 
 //Fn to Load Q&A
@@ -52,13 +56,35 @@ function loadQuestion() {
 
   optionsE1.appendChild(button);
 });
+   
+startTimer();
 
 }
 
 loadQuestion();
 
+
+//tiner fn
+function startTimer() {
+  clearInterval(timerId); // clear old timer
+  timeLeft = 10;
+  timerEl.textContent = `Time left: ${timeLeft}s`;
+
+  timerId = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = `Time left: ${timeLeft}s`;
+
+    if (timeLeft === 0) {
+      clearInterval(timerId);
+      nextQuestion(); // auto move to next question
+    }
+  }, 1000);
+}
+
+
 //Checking answer 
 function checkAnswer(selectedIndex) {
+    clearInterval(timerId);
   const correctIndex = questions[currentQuestionIndex].correctAnswer;
 
   if (selectedIndex === correctIndex) {
