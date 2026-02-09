@@ -36,6 +36,7 @@ const questionE1 = document.getElementById('question');
 const optionsE1 = document.getElementById('options');
 const nextBtn = document.getElementById("next-btn");
 const timerEl = document.getElementById("timer");
+const scoreEl = document.getElementById("score");
 
 
 
@@ -89,10 +90,8 @@ function checkAnswer(selectedIndex) {
 
   if (selectedIndex === correctIndex) {
     score++;
-    alert("Correct Answer!");
-  } else {
-    alert("Wrong Answer!");
-  }
+    scoreEl.textContent = `Score: ${score}`;
+  } 
 
   console.log("Current Score:", score);
 
@@ -107,13 +106,27 @@ function nextQuestion() {
 
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
-  } else {
-    alert("Quiz Completed!");
-    console.log("Final Score:", score);
+  } 
+  else {
+    endQuiz();
   }
 }
 
+
 nextBtn.addEventListener("click", nextQuestion);
+
+//endQuiz fn
+function endQuiz() {
+  clearInterval(timerId);
+
+  questionE1.textContent = "Quiz Completed";
+  optionsE1.innerHTML = "";
+  timerEl.textContent = "";
+  nextBtn.style.display = "none";
+
+  scoreEl.textContent = `Final Score: ${score} / ${questions.length}`;
+}
+
 
 
 
