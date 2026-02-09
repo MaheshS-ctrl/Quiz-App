@@ -24,3 +24,23 @@ const questions = [
     correctAnswer: 2
   }
 ];
+
+//Dom Elements
+const questionE1 = document.getElementById('question');
+const optionsE1 = document.getElementById('options');
+
+//Fn to Load Q&A
+function loadQuestion() {
+  const currentQuestion = questions[0]; // first question
+
+  questionE1.textContent = currentQuestion.question;
+  optionsE1.innerHTML = "";
+
+  currentQuestion.options.forEach((option) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    optionsE1.appendChild(button);
+  });
+}
+
+loadQuestion();
