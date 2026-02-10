@@ -1,33 +1,51 @@
 # Quiz App
 
-An interactive quiz application built using JavaScript.  
-The project is developed incrementally as part of weekly learning deliverables.
+An interactive, browser-based quiz application built with modern JavaScript.  
+The app focuses on clean architecture, modular design, and testable logic while delivering an engaging user experience with timed questions and real-time scoring.
 
+---
 
-## Week 3 – JavaScript Basics & DOM
+## Overview
 
-- JavaScript fundamentals (functions, arrays, objects)
-- DOM manipulation
-- Event handling
-- Quiz logic with timer and scoring
-- Interactive UI updates
+This project demonstrates practical usage of JavaScript fundamentals along with modern ES6+ features.  
+The application dynamically renders quiz questions, handles user interactions, tracks time and score, and provides instant UI feedback.
 
-## Week 4 – ES6+, Modularization & Testing
+The codebase is structured to promote separation of concerns and maintainability, with reusable utilities and unit-tested core logic.
 
-- Refactored codebase using ES6 modules (`import/export`)
-- Separated concerns into data, utilities, and UI logic
-- Introduced Node.js and npm tooling
-- Added Jest unit tests for reusable utilities
-- Achieved over 60% test coverage
+---
+
+## Features
+
+- Dynamic quiz rendering
+- Timer-based question flow
+- Real-time score calculation
+- Interactive and responsive UI
+- Modular, maintainable JavaScript code
+- Unit-tested business logic
+
+---
+
+## Technical Highlights
+
+- ES6+ syntax and modules (`import / export`)
+- DOM manipulation and event-driven programming
+- Separation of data, utilities, and UI logic
+- Node.js tooling with npm
+- Jest-based unit testing
+- Over 60% unit test coverage for reusable logic
+
+---
 
 ## Tech Stack
 
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- Node.js
-- npm
-- Jest (unit testing)
+- **HTML5**
+- **CSS3**
+- **JavaScript (ES6+)**
+- **Node.js**
+- **npm**
+- **Jest** (unit testing)
+
+---
 
 ## Project Structure
 
